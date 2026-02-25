@@ -15,7 +15,7 @@ const contactSchema = z.object({
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
-  secure: true,
+  secure: false,
   pool: true, // enable pooling
   maxConnections: 5,
   maxMessages: 100,
