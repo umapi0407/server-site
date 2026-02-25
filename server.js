@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: "http://localhost:8080", // Vite frontend
+  origin: "http://localhost:8080" || "https://kryyvix-website.vercel.app", // Vite frontend
 
 }));
 
