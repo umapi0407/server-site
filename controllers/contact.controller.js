@@ -22,7 +22,6 @@ const sendContactMail = async (req, res) => {
       },
     });
     
-    res.status(200).json({ success: true });
 
      /* 1️⃣ THANK YOU EMAIL → USER */
     await transporter.sendMail({
@@ -59,10 +58,14 @@ const sendContactMail = async (req, res) => {
       `,
 
     });
+    
     console.log("email sent successfully....")
+    
+    return res.status(200).json({ success: true, message: "Sent Successfully." });
+    
 
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       message: error.message,
     });
