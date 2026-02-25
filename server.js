@@ -8,8 +8,10 @@ dotenv.config();
 
 const app = express();
 
+const corsOrigin = ["http://localhost:8080", "https://kryyvix-website.vercel.app", "https://kryyvix.vercel.app"];
+
 app.use(cors({
-  origin: "http://localhost:8080" || "https://kryyvix-website.vercel.app" || "https://kryyvix.vercel.app", // Vite frontend
+  origin: corsOrigin, // Vite frontend
 
 }));
 
