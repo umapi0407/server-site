@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 const {sendToTeam, sendToUser} = require("../config/EmailTemplate")
+require("dotenv").config();
 
 const sendEmailToUser = async (name, email) => {
     try {
