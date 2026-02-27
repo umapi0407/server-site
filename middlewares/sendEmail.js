@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const {sendToTeam, sendToUser} = require("../config/EmailTempate")
+const {sendToTeam, sendToUser} = require("../config/EmailTemplate")
 
 const sendEmailToUser = async (name, email) => {
     try {
