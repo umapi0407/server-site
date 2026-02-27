@@ -14,36 +14,76 @@ const sendContactMail = async (req, res) => {
   try {
     const data = contactSchema.parse(req.body);
 
-    setImmediate(async() => {
-      try {
-        await sendEmailToUser(data.name, data.email);
+    // Send both emails concurrently (much faster than sequential)
+    await Promise.all([
+      sendEmailToUser(data.name, data.email),
+      sendEmailToTeam(data.name, data.email, data.phone, data.brief)
+    ]);
 
-        await sendEmailToTeam(data.name, data.email, data.phone, data.brief);
-
-        console.log("email sent successfully");
-
-        return res.status(200).json({
-          message: "email sent successfully",
-          success: true
-        })
-      } catch (error) {
-        console.log(error.message)
-        return res.status(500).json({
-          message: "failed to sent an email",
-          error: error.message,
-          success: false
-        })
-      }
-    })
+    console.log("All emails sent successfully");
+    return res.status(200).json({
+      message: "email sent successfully",
+      success: true
+    });
+    
   } catch (error) {
-    return res.status(400).json({
-      success: false,
-      message: error.message,
+    console.error("Contact error:", error.message);
+    return res.status(500).json({
+      message: "failed to send email",
+      error: error.message,
+      success: false
     });
   }
 };
 
 module.exports = {sendContactMail};
+
+// const { z, success } = require("zod");
+// require("dotenv").config()
+// const {sendEmailToUser, sendEmailToTeam} = require("../middlewares/sendEmail")
+
+// const contactSchema = z.object({
+//   name: z.string().min(1),
+//   email: z.string().email(),
+//   phone: z.string().optional(),
+//   brief: z.string().min(10),
+// });
+
+// const sendContactMail = async (req, res) => {
+
+//   try {
+//     const data = contactSchema.parse(req.body);
+
+//     setImmediate(async() => {
+//       try {
+//         await sendEmailToUser(data.name, data.email);
+
+//         await sendEmailToTeam(data.name, data.email, data.phone, data.brief);
+
+//         console.log("email sent successfully");
+
+//         return res.status(200).json({
+//           message: "email sent successfully",
+//           success: true
+//         })
+//       } catch (error) {
+//         console.log(error.message)
+//         return res.status(500).json({
+//           message: "failed to sent an email",
+//           error: error.message,
+//           success: false
+//         })
+//       }
+//     })
+//   } catch (error) {
+//     return res.status(400).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
+// module.exports = {sendContactMail};
 
 // const nodemailer = require("nodemailer");
 // const { z } = require("zod");
