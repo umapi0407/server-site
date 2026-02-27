@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const {sendToTeam, sendToUser} = require("../config/EmailTempate")
+const {sendToTeam, sendToUser} = require("../config/EmailTemplate")
 
 // Create transporter ONCE and reuse it
 const transporter = nodemailer.createTransport({
